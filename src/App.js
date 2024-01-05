@@ -5,6 +5,7 @@ import Home from "./components/pages/home";
 import Offers from "./components/pages/offers";
 import About from "./components/pages/about";
 import Footer from "./components/footer/footer";
+import SearchInOffers from "./components/header/searchInOffers";
 
 
 function App() {
@@ -41,6 +42,12 @@ function App() {
           <Route path="/" element={<Footer />} />
         </Routes>
       </BrowserRouter>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/searchInOffers" element={<SearchInOffers />} />
+        </Routes>
+      </BrowserRouter> 
     </main>
     <footer>
 

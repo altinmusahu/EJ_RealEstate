@@ -23,7 +23,7 @@ const Header = () => {
         </div>
         <div className="flex items-center">
             <NavLink to='/' className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Top offers</NavLink>
-            <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Search in offers</NavLink>
+            <NavLink to='/searchInOffers' className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Search in offers</NavLink>
             <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">References</NavLink>
             <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">About us</NavLink>
             <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Our team</NavLink>
