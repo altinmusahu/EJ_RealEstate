@@ -29,7 +29,7 @@ const Offers = () => {
                 <div className="flex space-x-4">
                     {/* Box 1 */}
                     <div className="flex-shrink-0 w-80 h-96 bg-white rounded border border-slate-100 mt-12 ml-20">
-                    <img className="w-96 h-64" src="https://via.placeholder.com/444x249" />
+                    <img className="w-96 h-64" src="" />
                         <div className="flex flex-col justify-between p-4">
                             <div className="w-80 text-slate-900 text-xl font-bold font-merriweather leading-7">
                             Large 4-room apartment with a beautiful terrace
