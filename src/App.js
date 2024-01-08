@@ -5,6 +5,7 @@ import Home from "./components/pages/home";
 import Offers from "./components/pages/offers";
 import About from "./components/pages/about";
 import Footer from "./components/footer/footer";
+import SearchInOffers from "./components/header/searchInOffers";
 
 
 function App() {
