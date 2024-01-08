@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -18,6 +18,8 @@ const Details = () => {
     // Add more descriptions as needed
   ];
 
+  const sliderRef = useRef(null);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -29,17 +31,29 @@ const Details = () => {
   return (
     <div className="flex-col w-full h-full bg-white pb-12 md:pb-24">
       <h1 className="text-slate-900 text-5xl font-bold font-['Merriweather'] leading-10 mb-4 text-center">Premium penthouse in central Barcelona with panoramic views</h1>
-      <div className="w-[40%] mt-8 ml-28">
-        <Slider {...settings}>
+      <div className="w-[40%] mt-8 ml-28 relative">
+        <Slider ref={sliderRef} {...settings}>
           {imageUrls.map((url, index) => (
             <div key={index} className="flex flex-col overflow-hidden rounded-lg shadow-md">
               <img src={url} alt={`Photo ${index + 1}`} className="w-full h-80 object-cover mx-auto" />
-              <div className="p-4">
-                <p className="text-gray-700">{descriptions[index]}</p>
+              <div className="p-4 bg-gray-100">
+                <p className="text-gray-700 text-lg">{descriptions[index]}</p>
               </div>
             </div>
           ))}
         </Slider>
+        <button
+          className="absolute top-1/2 left-0 transform -translate-y-1/2 text-3xl text-gray-700"
+          onClick={() => sliderRef.current.slickPrev()}
+        >
+          {"<"}
+        </button>
+        <button
+          className="absolute top-1/2 right-0 transform -translate-y-1/2 text-3xl text-gray-700"
+          onClick={() => sliderRef.current.slickNext()}
+        >
+          {">"}
+        </button>
       </div>
 
       <div className="flex space-x-4 mt-28 flex-col">
