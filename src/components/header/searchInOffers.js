@@ -37,30 +37,38 @@ const SearchInOffers = () => {
                 <div className="w-64 h-12 relative  bg-white border-2 border-slate-900 mt-32 rounded-md">
                     <div className="left-[16px] top-[11px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-relaxed">Most expensive</div>
                 </div>
-
-
-
-                
-
             </div>
 
 
             <div className="w-92 h-16 relative ml-96 mt-12">
-  <div className="left-52 top-[30px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">0 €</div>
-  <div className="left-[580px] top-[31px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">980 000 €</div>
-  <div className="w-96 h-1 left-[220px] top-[14px] absolute bg-indigo-300 rounded-3xl" />
-  <div className="w-6 h-6 left-52 top-0 absolute bg-blue-900 rounded-full" />
-  <div className="w-6 h-6 left-[600px] top-0 absolute bg-blue-900 rounded-full" />
-</div>
-
+                <div className="left-52 top-[30px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">0 €</div>
+                <div className="left-[580px] top-[31px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">980 000 €</div>
+                <div className="w-96 h-1 left-[220px] top-[14px] absolute bg-indigo-300 rounded-3xl" />
+                <div className="w-6 h-6 left-52 top-0 absolute bg-blue-900 rounded-full" />
+                <div className="w-6 h-6 left-[600px] top-0 absolute bg-blue-900 rounded-full" />
+            </div>
         </div>
 
-        
-            
-        
+        <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12 mb-12">
+            <div className="lg:w-80 lg:h-auto w-80 h-96 md:h-96 bg-white rounded border border-slate-100">
+                <img className="w-96 h-72" src="https://via.placeholder.com/495x278" />
+                <div className="w-80 text-slate-900 text-xl font-bold font-['Merriweather'] leading-7">Large 4-room apartment with a beautiful terrace</div>
+                <div className="text-blue-900 text-base font-bold font-['Open Sans']">320 000€</div>
+                <div className="text-slate-900 text-base font-normal font-['Open Sans']">Barcelona IV. </div>
+            </div>
+        </div>
 
-          
+
+        <div className="flex items-center justify-center m-5">
+            <button className="w-32 h-12 py-3 rounded border-2 border-blue-900 flex items-center justify-center gap-2.5 focus:border-blue-500 cursor-pointer">
+                    <div className="text-center text-blue-900 text-base font-bold font-['Open Sans']">Show next</div>
+            </button>
+        </div>
+
+
     </div>
+
+
     
 
   );
