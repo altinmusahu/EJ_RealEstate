@@ -9,43 +9,25 @@ import Footer from "./components/footer/footer";
 
 function App() {
   return (
-    <>
-    <header>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Header />} />
-        </Routes>
-      </BrowserRouter>
-    </header>
-    <main>
     <BrowserRouter>
+    <div className="flex flex-col min-h-screen">
+      <header>
+        <Header />
+        
+      </header>
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/topOffers" element={<Offers />} />
+          <Route path="/about" element={<About />} />
         </Routes>
-      </BrowserRouter>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Offers />} />
-        </Routes>
-      </BrowserRouter>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<About />} />
-        </Routes>
-      </BrowserRouter>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Footer />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
-    <footer>
-
-    </footer>
-    </>
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
+  </BrowserRouter>
   );
 }
 
