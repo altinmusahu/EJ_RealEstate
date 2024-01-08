@@ -7,7 +7,6 @@ const SearchInOffers = () => {
   return (
 
     <div className="w-full h-full">
-        
 
         <div className="w-full h-16 text-center text-slate-900 text-5xl font-bold font-['Merriweather'] leading-10 mx-auto mt-16">Search for an offer </div>
         <div className="w-full h-11 text-center text-slate-900 text-xl font-normal font-['Open Sans'] leading-9">Choose from the most advantageous offers</div>
