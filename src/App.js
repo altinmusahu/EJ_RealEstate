@@ -6,6 +6,7 @@ import Offers from "./components/pages/offers";
 import About from "./components/pages/about";
 import Footer from "./components/footer/footer";
 import SearchInOffers from "./components/header/searchInOffers";
+import Details from "./components/pages/details"
 
 
 function App() {
@@ -18,10 +19,14 @@ function App() {
       </header>
       <main className="flex-grow">
         <Routes>
+          
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/topOffers" element={<Offers />} />
+          <Route path="/searchInOffers" element={<SearchInOffers />} />
           <Route path="/about" element={<About />} />
+          <Route path="/details" element={<Details />} />
+
         </Routes>
       </main>
       <footer>

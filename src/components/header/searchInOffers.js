@@ -7,38 +7,6 @@ const SearchInOffers = () => {
   return (
 
     <div className="w-full h-full">
-        <div className="flex items-center p-10 mx-10 justify-between">
-            <div className="flex items-center">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="65"
-                height="40"
-                viewBox="0 0 65 40"
-                fill="none"
-                className="ml-12"
-                >
-                <path
-                    d="M43.2072 0L32.4211 7.88354L21.626 0L0 15.794V40H12.551V34.6876H5.31243V18.4994L21.626 6.58455L27.9059 11.1713L21.5722 15.794V40H30.1008H36.6853H43.252V15.794L36.9183 11.1713L43.1982 6.58455L59.5118 18.4994V34.6876H51.6909V40H64.8421V15.794L43.2072 0ZM37.9395 18.4994V34.6876H36.6943H30.1097H26.8936V18.4994L32.4121 14.4681L37.9395 18.4994Z"
-                    fill="#091638"
-                ></path>
-                </svg>
-                
-            </div>
-            <div className="flex items-center">
-                <NavLink to='/' className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Top offers</NavLink>
-                <NavLink to='' className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Search in offers</NavLink>
-                <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">References</NavLink>
-                <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">About us</NavLink>
-                <NavLink className="text-slate-900 text-base font-normal font-['Open Sans'] leading-9 mx-4">Our team</NavLink>
-
-            </div>
-            <div className="flex items-center gap-5">
-            <div className="w-32 h-12 px-6 py-3 bg-blue-900 rounded justify-start items-center gap-2.5 inline-flex">
-            <div className="text-center text-white text-base font-bold font-['Open Sans']">Contact us</div>
-            </div>
-            </div>
-
-        </div>
 
         <div className="w-full h-16 text-center text-slate-900 text-5xl font-bold font-['Merriweather'] leading-10 mx-auto mt-16">Search for an offer </div>
         <div className="w-full h-11 text-center text-slate-900 text-xl font-normal font-['Open Sans'] leading-9">Choose from the most advantageous offers</div>
@@ -69,30 +37,38 @@ const SearchInOffers = () => {
                 <div className="w-64 h-12 relative  bg-white border-2 border-slate-900 mt-32 rounded-md">
                     <div className="left-[16px] top-[11px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-relaxed">Most expensive</div>
                 </div>
-
-
-
-                
-
             </div>
 
 
             <div className="w-92 h-16 relative ml-96 mt-12">
-  <div className="left-52 top-[30px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">0 €</div>
-  <div className="left-[580px] top-[31px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">980 000 €</div>
-  <div className="w-96 h-1 left-[220px] top-[14px] absolute bg-indigo-300 rounded-3xl" />
-  <div className="w-6 h-6 left-52 top-0 absolute bg-blue-900 rounded-full" />
-  <div className="w-6 h-6 left-[600px] top-0 absolute bg-blue-900 rounded-full" />
-</div>
-
+                <div className="left-52 top-[30px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">0 €</div>
+                <div className="left-[580px] top-[31px] absolute text-slate-900 text-base font-normal font-['Open Sans'] leading-9">980 000 €</div>
+                <div className="w-96 h-1 left-[220px] top-[14px] absolute bg-indigo-300 rounded-3xl" />
+                <div className="w-6 h-6 left-52 top-0 absolute bg-blue-900 rounded-full" />
+                <div className="w-6 h-6 left-[600px] top-0 absolute bg-blue-900 rounded-full" />
+            </div>
         </div>
 
-        
-            
-        
+        <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12 mb-12">
+            <div className="lg:w-80 lg:h-auto w-80 h-96 md:h-96 bg-white rounded border border-slate-100">
+                <img className="w-96 h-72" src="https://via.placeholder.com/495x278" />
+                <div className="w-80 text-slate-900 text-xl font-bold font-['Merriweather'] leading-7">Large 4-room apartment with a beautiful terrace</div>
+                <div className="text-blue-900 text-base font-bold font-['Open Sans']">320 000€</div>
+                <div className="text-slate-900 text-base font-normal font-['Open Sans']">Barcelona IV. </div>
+            </div>
+        </div>
 
-          
+
+        <div className="flex items-center justify-center m-5">
+            <button className="w-32 h-12 py-3 rounded border-2 border-blue-900 flex items-center justify-center gap-2.5 focus:border-blue-500 cursor-pointer">
+                    <div className="text-center text-blue-900 text-base font-bold font-['Open Sans']">Show next</div>
+            </button>
+        </div>
+
+
     </div>
+
+
     
 
   );
