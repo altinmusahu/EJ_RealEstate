@@ -15,8 +15,8 @@ const About = () => {
             </div>
 
             <div className="w-1/3 ml-10">
-                <div className="text-slate-900 text-5xl font-bold font-merriweather leading-10 mb-6">About us</div>
-                <div className="text-slate-900 text-base font-normal font-open-sans leading-relaxed">
+                <div className="text-slate-900 text-5xl font-bold font-merriweather leading-10 mb-6 text-center">About us</div>
+                <div className="text-slate-900 text-base font-normal font-open-sans leading-relaxed w-96 ml-16">
                     We are a company that connects the world of real estate and finance. We provide a complete service for the sale, purchase, or rental of real estate. 
                     Our advantage is more than 15 years of experience and soil in attractive locations in Slovakia with branches in Bratislava.
                     <br />
@@ -28,7 +28,7 @@ const About = () => {
 
         <div className="md:flex md:items-center md:justify-center md:gap-8 md:flex-row flex-col text-center justify-center">
 
-            <div className="w-80 h-96 bg-white rounded border border-slate-100 flex justify-center items-center flex-col">
+            <div className="w-60 h-96 bg-white rounded border border-slate-100 flex justify-center items-center flex-col">
                 <div className="flex">
                     <img className="rounded-full object-contain" alt="Placeholder" />
                 </div>
@@ -37,7 +37,7 @@ const About = () => {
                     <div className="text-center text-slate-900 text-xl font-normal font-['Open Sans']">Super duper position</div>
                 </div>
             </div>
-            <div className="w-80 h-96 bg-white rounded border border-slate-100 flex justify-normal items-center flex-col">
+            <div className="w-60 h-96 bg-white rounded border border-slate-100 flex justify-center items-center flex-col">
                 <div className="flex">
                     <img className="rounded-full object-contain" alt="Placeholder" />
                 </div>

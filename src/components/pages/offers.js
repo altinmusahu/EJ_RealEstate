@@ -2,6 +2,7 @@ import React from "react";
 import { CiSearch } from "react-icons/ci";
 import pic1 from '../../utils/pic1.png'; // Placeholder image
 import { FaLocationDot } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 
 
 const Offers = () => {
@@ -19,21 +20,23 @@ const Offers = () => {
         </div>
       </div>
 
-      <div className="lg:flex lg:justify-end lg:items-end space-x-4 mr-8 md:mr-80 relative flex hidden">
+      {/* <div className="lg:flex lg:justify-end lg:items-end space-x-4 mr-8 md:mr-80 relative flex hidden">
         <div className="w-8 h-8 md:w-16 md:h-16 relative">
-          <div className="w-8 h-8 md:w-16 md:h-16 absolute mt-6 bg-blue-900 rounded-full"></div>
+            <div className="w-8 h-8 md:w-16 md:h-16 absolute mt-6 bg-blue-900 rounded-full">
+            </div>
         </div>
         <div className="w-8 h-8 md:w-16 md:h-16 relative">
           <div className="w-8 h-8 md:w-16 md:h-16 absolute mt-6 bg-blue-900 rounded-full"></div>
         </div>
-      </div>
+      </div> */}
 
-      <div className=" lg:block custom-w h-0.5 bg-blue-900 lg:ml-40 hidden"></div>
+      <div className=" lg:block custom-w h-0.5 bg-blue-900 lg:ml-40 hidden mt-2"></div>
 
       <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12">
         {/* Box 1 */}
+        <Link to="/details"> 
         <div className="lg:w-80 lg:h-auto w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
-          <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden object-contain transition duration-300 transform hover:scale-105" src={pic1} alt="Offer" /> {/* Use src={pic1} to display the image */}
+          <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden transition duration-300 transform hover:scale-105" src={pic1} alt="Offer" /> {/* Use src={pic1} to display the image */}
           <div className="flex flex-col justify-between p-2 md:p-4">
             <div className="text-slate-900 text-lg md:text-xl font-bold font-merriweather leading-6 mb-4">
               Large 4-room apartment with a beautiful terrace
@@ -43,7 +46,9 @@ const Offers = () => {
                 Ne zemer te Prishtines</div>
           </div>
         </div>
+        </Link>
       </div>
+      
     </div>
   );
 }
