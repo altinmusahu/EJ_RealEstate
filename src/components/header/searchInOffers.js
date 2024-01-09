@@ -15,10 +15,17 @@ const SearchInOffers = () => {
             <div className="w-96 h-14 relative">
                 <div className="w-96 h-14 left-[330px] top-14 absolute">
                 <div className="w-36 h-14 left-[604px] top-0 absolute bg-blue-900 rounded" />
-                <div className="w-14 h-6 left-[645px] top-[17.93px] absolute text-center text-white text-base font-bold font-['Open Sans']">Search</div>
+                <div className="w-14 h-6 left-[645px] top-[17.93px] absolute text-center text-white text-base font-bold font-['Open Sans'] cursor-pointer">Search</div>
                 <div className="w-4 h-4 left-[418px] top-[21.09px] absolute"></div>
                 </div>
-                <div className="w-96 h-14 left-[550px] top-14 absolute text-slate-900 bg-white text-base font-normal font-['Open Sans'] leading-relaxed pt-3 pl-2">Enter a keyword</div>
+                <div className="w-96 h-14 left-[550px] top-14 absolute bg-white text-base font-normal font-['Open Sans'] leading-relaxed pl-2">
+                    <input
+                    type="text"
+                    className="w-full h-full border-none outline-none text-slate-900"
+                    placeholder="Enter a keyword"
+                    />
+                </div>
+
              </div>
 
              <div className="flex space-x-5 ml-44">

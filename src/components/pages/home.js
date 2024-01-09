@@ -38,7 +38,7 @@ const Home = () => {
               <div className="p-6">
                 <Menu.Button
                   onClick={handleMenuToggle}
-                  className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-base font-normal font-['Open Sans'] leading-relaxed"
+                  className="inline-flex w-full justify-center  ml-6 rounded-md bg-white px-3 py-2 text-sm  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-base font-normal font-['Open Sans'] leading-relaxed"
                 >
                   Property type
                   <ChevronDownIcon
@@ -73,11 +73,16 @@ const Home = () => {
                 </div>
               )}
             </Menu>
-            <div className="bg-gray-200 rounded w-32 h-9 mt-7  gap-2 flex items-center justify-start text-center font-['Open Sans']">
+            <div className="bg-white rounded w-48 h-10 mt-6 gap-1 flex items-center justify-start text-center font-['Open Sans']">
               <CiSearch className="ml-2 cursor-pointer" />
-              Altin
+              <input
+              type="text"
+              className="w-40 h-10 border-none outline-none text-slate-900 text-base font-normal font-['Open Sans'] leading-relaxed"
+              placeholder="Search for location"
+              />
             </div>
-            <button class="w-28 mr-5 bg-blue-900 h-9 rounded flex mt-7 justify-center items-center text-center text-white text-base  font-bold  font-['Open Sans'] rounded">
+
+            <button class="w-28 mr-5 bg-blue-900 h-10 rounded flex mt-6 justify-center items-center text-center text-white text-base  font-bold  font-['Open Sans'] rounded">
               Search
             </button>
           </div>
