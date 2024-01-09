@@ -8,6 +8,8 @@ import Footer from "./components/footer/footer";
 import SearchInOffers from "./components/header/searchInOffers";
 import SignIn from "./components/auth/signin";
 import SignUp from "./components/auth/signup";
+import Details from "./components/pages/details"
+
 
 function App() {
   return (
@@ -19,10 +21,14 @@ function App() {
       </header>
       <main className="flex-grow">
         <Routes>
+          
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/topOffers" element={<Offers />} />
+          <Route path="/searchInOffers" element={<SearchInOffers />} />
           <Route path="/about" element={<About />} />
+          <Route path="/details" element={<Details />} />
+
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
 
