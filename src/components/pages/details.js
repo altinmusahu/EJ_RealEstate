@@ -42,7 +42,7 @@ const Details = () => {
 
   return (
     <div>
-        <div className="w-full h-32 text-slate-900 text-5xl font-bold font-['Merriweather'] leading-10 ml-28">Premium penthouse in central Barcelona <br></br>with panoramic views</div>
+        <div className="h-32 text-slate-900 text-5xl font-bold font-['Merriweather'] leading-10 ml-28">Premium penthouse in central Barcelona <br></br>with panoramic views</div>
         <div className="flex flex-cols-2">
             <div className="flex-col w-[70%] h-full bg-white pb-12 md:pb-24">
             <div className="w-[70%] mt-8 ml-28 relative">
