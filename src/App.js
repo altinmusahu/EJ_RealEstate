@@ -6,6 +6,8 @@ import Offers from "./components/pages/offers";
 import About from "./components/pages/about";
 import Footer from "./components/footer/footer";
 import SearchInOffers from "./components/header/searchInOffers";
+import SignIn from "./components/auth/signin";
+import SignUp from "./components/auth/signup";
 import Details from "./components/pages/details"
 
 
@@ -26,6 +28,10 @@ function App() {
           <Route path="/searchInOffers" element={<SearchInOffers />} />
           <Route path="/about" element={<About />} />
           <Route path="/details" element={<Details />} />
+
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+
 
         </Routes>
       </main>
