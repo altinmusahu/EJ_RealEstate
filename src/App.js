@@ -6,7 +6,8 @@ import Offers from "./components/pages/offers";
 import About from "./components/pages/about";
 import Footer from "./components/footer/footer";
 import SearchInOffers from "./components/header/searchInOffers";
-
+import SignIn from "./components/auth/signin";
+import SignUp from "./components/auth/signup";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/topOffers" element={<Offers />} />
           <Route path="/about" element={<About />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+
+
         </Routes>
       </main>
       <footer>

@@ -52,9 +52,16 @@ app.use(function (request, response, next) {
   next();
 });
 
+app.use(express.json()); // Add this line to parse JSON requests
+
+
 // User Routes
 const users = require("./routes/UserRoute");
-app.use("/api", users);
+const PropertyTypes = require("./routes/PTypeRoute");
+const Properties = require("./routes/PropertiesRoute");
+const auth = require("./routes/authRoutes");
+
+app.use("/api", users, PropertyTypes, Properties, auth);
 
 
 // Basic Routes

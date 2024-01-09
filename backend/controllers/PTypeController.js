@@ -2,38 +2,39 @@ const sql = require('mssql');
 const dbConfig = require('../db/DBConn');
 const pool = new sql.ConnectionPool(dbConfig);
 const poolConnect = pool.connect();
-const crypto = require("crypto");
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
+exports.insertPropertyTypes = async (req, res) => {
+    try {
+      const { PropertyTypeName } = req.body;
+  
+      if (!PropertyTypeName) {
+        return res.status(400).json({ error: 'PropertyTypeName' });
+      }
+  
+      await poolConnect;
+  
+      const request = pool.request();
+  
+      // SQL query to insert a new user
+      const query = `
+        INSERT INTO PropertyTypes (PropertyTypeName)
+        VALUES (@PropertyTypeName)
+      `;
+  
+      // Input parameters for the SQL query
+      request.input('PropertyTypeName', sql.NVarChar(50), PropertyTypeName);
 
 
-// Assuming this is the registration or signup endpoint
-exports.insertUser = async (req, res, next) => {
-  try {
-    const { Username, Email, Password, Role } = req.body;
-
-    if (!Username || !Email || !Password || !Role) {
-      return res.status(400).json({ message: 'Missing required fields' });
+  
+      // Execute the query
+      const result = await request.query(query);
+  
+      res.status(200).json({ message: 'PRopertyType inserted successfully', result });
+    } catch (error) {
+      console.error('Error inserting Property:', error.message);
+      res.status(500).json({ error: 'Failed to insert Property' });
     }
-
-    const hashedPassword = await bcrypt.hash(Password, 10); // Hash the password with bcrypt
-
-    const pool = await sql.connect(dbConfig);
-    await pool.request()
-      .input('Username', sql.NVarChar(50), Username)
-      .input('Email', sql.NVarChar(100), Email)
-      .input('Password', sql.NVarChar(100), hashedPassword)
-      .input('Role', sql.NVarChar(50), Role)
-      .query('INSERT INTO Users (Username, Email, Password, Role) VALUES (@Username, @Email, @Password, @Role)');
-
-    return res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    console.error('Registration error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-
+  };
 
   exports.getAllUsers = async (req, res) => {
     try {
