@@ -9,6 +9,9 @@ import SearchInOffers from "./components/header/searchInOffers";
 import SignIn from "./components/auth/signin";
 import SignUp from "./components/auth/signup";
 import Details from "./components/pages/details"
+import Details2 from "./components/pages/details2"
+import Details3 from "./components/pages/details3"
+
 
 
 function App() {
@@ -28,7 +31,8 @@ function App() {
           <Route path="/searchInOffers" element={<SearchInOffers />} />
           <Route path="/about" element={<About />} />
           <Route path="/details" element={<Details />} />
-
+          <Route path="/details2" element={<Details2 />} />   
+          <Route path="/details3" element={<Details3 />} />      
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
 
