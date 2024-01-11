@@ -7,7 +7,7 @@ const cookies = new Cookies();
 const initialToken = cookies.get("token") || null;
 const initialEmail = cookies.get("email") || null;
 const initialUserId = cookies.get("UserId") || null;
-const tokenExpiration = cookies.get("tokenExpiration") || null;
+const initialRole = cookies.get("Role") || null;
 
 const userSlice = createSlice({
   name: "user",
@@ -15,7 +15,7 @@ const userSlice = createSlice({
     token: initialToken,
     UserId: initialUserId,
     Email: initialEmail,
-    tokenExpiration: tokenExpiration
+    Role: initialRole
 
   },
   reducers: {
@@ -40,7 +40,11 @@ const userSlice = createSlice({
     setUserId: (state, action) => {
       state.UserId = action.payload;
       cookies.set("UserId", action.payload, { path: "/", maxAge: 3600 });
-    }
+    },
+    setRole: (state, action) => {
+      state.Role = action.payload;
+      cookies.set("Role", action.payload, { path: "/", maxAge: 3600 });
+    },
   },
 });
 
@@ -48,7 +52,8 @@ export const {
   setToken,
   setEmail,
   setUserId,
-  clearToken
+  clearToken,
+  setRole
 } = userSlice.actions;
 
 export const login = (userData) => async (dispatch) => {
@@ -62,16 +67,18 @@ export const login = (userData) => async (dispatch) => {
           },
         }
       );
-      console.log(`responsi:` ,response.data);
       const token = response.data;
-      const expiration = response.data;
+      const Role = response.data.Role;
 
       console.log(token);
-      dispatch(setToken(token, expiration));
+      dispatch(setToken(token));
+      dispatch(setRole(Role));
+
     } catch (error) {
       console.error("Login error:", error);
       toast.error(`${error.response.data.message}`)
-  
+      return null; // Return null in case of error
+
     }
   };
 

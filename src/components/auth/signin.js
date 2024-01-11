@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../store/user-slice";
+import { login, userActions } from "../../store/user-slice";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,37 +14,43 @@ const SignIn = () => {
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token); // Mapping token from Redux store
-
+  const userRole = useSelector((state) => state.user.Role); // Check the property name
 
   const emailRef = useRef();
   const passwordRef = useRef();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    dispatch(login({ email, password })).catch((error) => {
+    dispatch(login({ email, password })).then((response) => {
+      if (response) {
+        const { Role } = response;
+        dispatch(userActions.setRole(Role));
+        if (Role === "admin") {
+          navigate('/dashboard');
+        } else {
+          navigate('/home');
+        }
+      }
+    }).catch((error) => {
       console.error("Login error:", error);
       toast.error("An error occurred while logging in");
     });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const email = emailRef.current.value;
-  //   const password = passwordRef.current.value;
-
-  //   dispatch(login({ email, password }));
-
-  // };
-
   useEffect(()=>{
     if(token) {
-    navigate("/home");
+      if (userRole === "admin") {
+        // Redirect to the admin dashboard page
+        navigate('/dashboard');
+      } else {
+        navigate('/home');
+      }
     }
-  },[token,navigate])
+  },[token,navigate, userRole])
 
 
 
