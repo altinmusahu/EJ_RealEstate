@@ -1,5 +1,8 @@
+// App.js
+
 import React from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Header from "./components/header";
 import Home from "./components/pages/home";
 import Offers from "./components/pages/offers";
@@ -8,6 +11,8 @@ import Footer from "./components/footer/footer";
 import SearchInOffers from "./components/header/searchInOffers";
 import SignIn from "./components/auth/signin";
 import SignUp from "./components/auth/signup";
+import Dashboard from "./components/pages/dashboard"; // Import the Dashboard component
+import ProtectedRoute from "./protectedRoutes"; // Import the ProtectedRoute component
 import Details from "./components/pages/details"
 import Details2 from "./components/pages/details2"
 import Details3 from "./components/pages/details3"
@@ -35,8 +40,10 @@ function App() {
           <Route path="/details3" element={<Details3 />} />      
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-
-
+          <Route
+              path="/dashboard"
+              element={<ProtectedRoute element={<Dashboard />} allowedRole={"admin"} />}
+            />
         </Routes>
       </main>
       <footer>

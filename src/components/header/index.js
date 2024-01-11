@@ -14,7 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(logout());
-    navigate("/");
+    // navigate("/");
   };
   return (
     <div className="flex flex-col sm:flex-row items-center p-5 sm:p-10 mx-5 sm:mx-10 justify-center lg:gap-20 mb-10">
@@ -74,7 +74,7 @@ const Header = () => {
             </div>
             <FaUser size={20} className="mr-5 cursor-pointer"/>
 
-            <NavLink>
+            <NavLink to='/home'>
               <button onClick={logoutHandler} className="bg-transparent rounded justify-start ml-2 items-center hover:bg-blue-900 text-blue-700 font-semibold hover:text-white py-3 w-36 border border-blue-500 hover:border-transparent rounded sm:mx-2">
                 Log out
               </button>
