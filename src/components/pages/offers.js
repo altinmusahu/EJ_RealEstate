@@ -1,6 +1,13 @@
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import pic1 from '../../utils/pic1.png'; // Placeholder image
+import pic2 from '../../utils/pic2.jpg';
+import pic3 from '../../utils/pic3.avif';
+import pic4 from '../../utils/pic4.avif';
+import pic5 from '../../utils/pic5.jpeg';
+import pic6 from '../../utils/pic6.webp';
+import pic7 from '../../utils/pic7.jpg';
+import pic8 from '../../utils/pic8.avif';
 import { FaLocationDot } from "react-icons/fa6";
 import { Link, NavLink } from 'react-router-dom';
 
@@ -21,9 +28,7 @@ const Offers = () => {
           </NavLink>
         </div>
       </div>
-
       <div className=" lg:block custom-w h-0.5 bg-blue-900 lg:ml-40 hidden mt-2"></div>
-
       <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12">
         {/* Box 1 */}
         <Link to="/details"> 
@@ -36,12 +41,119 @@ const Offers = () => {
             </div>
             <div className="text-blue-900 text-base font-bold font-[Open-Sans]">807.57 €/ month</div>
             <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
-            Barcelona I</div>
+                Barcelona</div>
+          </div>
+        </div>
+        </Link>
+        
+        {/* Box 2 */}
+        <Link to="/details2"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden transition duration-300 transform hover:scale-105" src={pic2} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Seaside retreat with breathtaking ocean view.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">690 000€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Madrid</div>
+          </div>
+        </div>
+        </Link>
+
+        {/* Box 3 */}
+        <Link to="/details3"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic3} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Two-story residence featuring modern amenities.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">410 000€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Valencia</div>
+          </div>
+        </div>
+        </Link>
+
+         {/* Box 0 */}
+         <Link to="/details3"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic4} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Charming urban loft with panoramic city views and contemporary design.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">562 300€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Sevilla</div>
           </div>
         </div>
         </Link>
       </div>
-      
+
+      <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-10 mt-12">
+        {/* Box 4 */}
+        <Link to="/details"> 
+        <div className="lg:w-80 lg:h-auto w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden transition duration-300 transform hover:scale-105" src={pic5} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Quaint 3-bedroom home with a spacious backyard retreat
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">365 000€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Granada</div>
+          </div>
+        </div>
+        </Link>
+        
+        {/* Box 5 */}
+        <Link to="/details2"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden transition duration-300 transform hover:scale-105" src={pic6} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Quaint countryside cottage, a perfect escape from the city.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">451 230€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Bilbao</div>
+          </div>
+        </div>
+        </Link>
+
+        {/* Box 6 */}
+        <Link to="/details3"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic7} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Elegant townhouse showcasing timeless architecture and luxurious finishes.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">445 000€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Zaragoza</div>
+          </div>
+        </div>
+        </Link>
+
+         {/* Box 8 */}
+         <Link to="/details3"> 
+        <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
+          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic8} alt="Offer" />
+          <div className="flex flex-col justify-between p-2 md:p-4">
+            <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+            Rustic wood villa nestled in nature's embrace, where tranquility meets timeless charm.
+            </div>
+            <div className="text-blue-900 text-base font-bold font-[Open-Sans]">555 222€</div>
+            <div className="text-slate-900 text-base font-normal font-[open-sans] flex"> <FaLocationDot className="flex justify-center items-center mt-1 mr-2"/>
+                Malaga</div>
+          </div>
+        </div>
+        </Link>
+      </div>
+
     </div>
   );
 }
