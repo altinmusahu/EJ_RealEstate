@@ -22,35 +22,33 @@ import Details3 from "./components/pages/details3"
 function App() {
   return (
     <BrowserRouter>
-    <div className="flex flex-col min-h-screen">
-      <header>
-        <Header />
-        
-      </header>
-      <main className="flex-grow">
-        <Routes>
-          
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/topOffers" element={<Offers />} />
-          <Route path="/searchInOffers" element={<SearchInOffers />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/details1" element={<Details1 />} />
-          <Route path="/details2" element={<Details2 />} />   
-          <Route path="/details3" element={<Details3 />} />      
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route
-              path="/dashboard"
-              element={<ProtectedRoute element={<Dashboard />} allowedRole={"admin"} />}
-            />
-        </Routes>
-      </main>
-      <footer>
-        <Footer />
-      </footer>
-    </div>
-  </BrowserRouter>
+      <div className="flex flex-col min-h-screen">
+        <header>
+          <Header />
+        </header>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/topOffers" element={<Offers />} />
+            <Route path="/searchInOffers" element={<SearchInOffers />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/details1" element={<Details1 />} />
+            <Route path="/details2" element={<Details2 />} />
+            <Route path="/details3" element={<Details3 />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+
+            <Route element={<ProtectedRoute allowedRole="admin" />}>
+              <Route path="/dashboard" element={<Dashboard />}/>
+            </Route>
+          </Routes>
+        </main>
+        <footer>
+          <Footer />
+        </footer>
+      </div>
+    </BrowserRouter>
   );
 }
 

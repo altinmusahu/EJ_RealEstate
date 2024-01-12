@@ -25,32 +25,20 @@ const SignIn = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    dispatch(login({ email, password })).then((response) => {
-      if (response) {
-        const { Role } = response;
-        dispatch(userActions.setRole(Role));
-        if (Role === "admin") {
-          navigate('/dashboard');
-        } else {
-          navigate('/home');
-        }
-      }
-    }).catch((error) => {
-      console.error("Login error:", error);
-      toast.error("An error occurred while logging in");
-    });
+    dispatch(login({ email, password }));
+
   };
 
-  useEffect(()=>{
-    if(token) {
-      if (userRole === "admin") {
+  useEffect(() => {
+    if (token) {
+      if (userRole === "user") {
         // Redirect to the admin dashboard page
-        navigate('/dashboard');
-      } else {
         navigate('/home');
+      } else {
+        navigate('/dashboard');
       }
     }
-  },[token,navigate, userRole])
+  }, [token, navigate, userRole]);
 
 
 
