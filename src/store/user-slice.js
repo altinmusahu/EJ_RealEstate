@@ -69,6 +69,7 @@ export const login = (userData) => async (dispatch) => {
       );
       const token = response.data;
       const Role = response.data.Role;
+      console.log("Role:", Role);
 
       console.log(token);
       dispatch(setToken(token));

@@ -1,19 +1,19 @@
 const config = {
-    server: "LEART",
-    authentication: {
-      type: "default",
-      options: {
-        userName: "leart1",
-        password: "leart",
-        trustedConnection: true,
-      },
-    },
-    database: "RealEstate",
-    trustServerCertificate: true,
-    synchronize: true,
+  server: "ALTIN",
+  authentication: {
+    type: "default",
     options: {
-      port: 1433,
+      userName: "altinDB",
+      password: "altin",
+      trustedConnection: true,
     },
-  };
-  
-  module.exports = config;
+  },
+  database: "RealEstate",
+  trustServerCertificate: true,
+  synchronize: true,
+  options: {
+    port: 1433,
+  },
+};
+
+module.exports = config;
