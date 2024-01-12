@@ -1,7 +1,11 @@
+const app = require('./index');
 const sql = require('mssql');
 const dotenv = require('dotenv');
-
+const cors = require('cors');
+app.use(cors());
 dotenv.config({ path: './config.env' });
+
+
 
 const config = {
   host: process.env.DB_HOST,
@@ -10,9 +14,7 @@ const config = {
   database: process.env.DB_NAME,
 };
 
-const app = require('./index');
-
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
