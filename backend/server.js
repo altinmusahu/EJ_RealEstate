@@ -8,7 +8,8 @@ const corsOptions = {
   origin: 'http://localhost:3000',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
-  optionsSuccessStatus: 204,
+  // optionsSuccessStatus: 204,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -43,6 +44,31 @@ app.get("/api/getusers", async (req, res) => {
   }
 });
 
+//Create users function
+app.post("/api/adduser", async (req, res) => {
+  const newUser = req.body;
+
+  try {
+    const pool = await sql.connect(config);
+    const result = await pool
+      .request()
+      .input('Username', sql.NVarChar(255), newUser.Username)
+      .input('Email', sql.NVarChar(255), newUser.Email)
+      .input('Password', sql.NVarChar(255), newUser.Password)
+      .input('Role', sql.NVarChar(50), newUser.Role)
+      .query('INSERT INTO Users (Username, Email, Password, Role) VALUES (@Username, @Email, @Password, @Role); SELECT SCOPE_IDENTITY() AS UserID');
+
+    const userId = result.recordset[0].UserID;
+    const createdUser = { UserID: userId, ...newUser };
+
+    res.json({ success: true, user: createdUser });
+  } catch (error) {
+    console.error('Error adding user:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+
 // Edit users
 app.put("/api/edituser", async (req, res) => {
   const editedUser = req.body;
@@ -67,6 +93,29 @@ app.put("/api/edituser", async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
+//Delete function code
+app.delete("/api/deleteuser/:id", async (req, res) => {
+  const userId = req.params.id;
+  console.log('Received delete request for user ID:', userId);
+  try {
+    const pool = await sql.connect(config);
+    const result = await pool
+      .request()
+      .input('UserID', sql.Int, userId)
+      .query('DELETE FROM Users WHERE UserID = @UserID');
+
+    if (result.rowsAffected[0] > 0) {
+      res.json({ success: true, message: 'User deleted successfully' });
+    } else {
+      res.status(404).json({ success: false, message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
