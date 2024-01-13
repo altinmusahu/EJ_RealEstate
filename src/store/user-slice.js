@@ -77,7 +77,7 @@ export const login = (userData) => async (dispatch) => {
 
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(`${error.response.data.message}`)
+      toast.error(`${error.response?.data?.message || 'An error occurred'}`);
       return null; // Return null in case of error
 
     }
