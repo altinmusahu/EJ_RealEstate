@@ -31,10 +31,16 @@ const config = {
 // Get users 
 
 app.get("/api/getusers", async (req, res) => {
+  //pagination
+  const page = req.query.page || 1;
+  const offset = (page - 1) * usersPerPage;
+  //
   try {
     const pool = await sql.connect(config);
-    const result = await pool.request().query('SELECT * FROM Users'); 
-
+    const result = await pool
+    .request()
+    .query(`SELECT * FROM Users ORDER BY UserID OFFSET ${offset} ROWS FETCH NEXT ${usersPerPage} ROWS ONLY`);
+    
     const users = result.recordset;
     res.json({ users });
   } 

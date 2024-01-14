@@ -8,6 +8,10 @@ const Dashboard = () => {
   const [editedUser, setEditedUser] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(4);   
+  //.
   const [newUser, setNewUser] = useState({
     Username: "",
     Email: "",
@@ -151,14 +155,14 @@ const Dashboard = () => {
             <button
               type="button"
               onClick={handleAddUserModalOpen}
-              className="bg-blue-500 border rounded-lg text-white px-4 py-2 cursor-pointer"
+              className="bg-gray-800 border rounded-lg text-white px-4 py-2 cursor-pointer"
             >
               Add a New User
             </button>
           </div>
           </div>
-          <div className="overflow-x-auto w-full h-96">
-            <table className="min-w-full bg-stone-50 rounded-lg mt-8">
+          <div className="w-full h-96">
+            <table className="min-w-full bg-stone-50 rounded-lg mt-8">             
               <thead>
                 <tr>
                   <th className="text-left px-4 py-2">ID</th>
@@ -168,9 +172,10 @@ const Dashboard = () => {
                   <th className="text-left px-9 py-2">Actions</th>
                 </tr>
               </thead>
-
               <tbody>
-                {users.map((user, index) => (
+                {users
+                .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage) //pagination
+                .map((user, index) => (
                   <tr key={user.UserID}>
                     <td className="border-t px-4 py-2">{user.UserID}</td>
                     <td className="border-t px-4 py-2">{user.Username}</td>
@@ -178,7 +183,7 @@ const Dashboard = () => {
                     <td className="border-t px-4 py-2">{user.Role}</td>
                     <td className="border-t px-4 py-2">
                       <div className="flex m-2">
-                        <button onClick={() => handleEditClick(user)} className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">
+                        <button onClick={() => handleEditClick(user)} className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer">
                           Edit
                         </button>
                         <svg
@@ -205,6 +210,33 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            <div className="flex items-center mt-2 justify-center">
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                type="button" className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-gray-700 hover:text-white px-3"
+                >
+                  <div className="flex flex-row align-middle">
+                    <svg className="w-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd"></path>
+                    </svg>
+                    <p className="ml-2">Prev</p>
+                  </div>
+              </button>
+
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === Math.ceil(users.length / usersPerPage)}
+                className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-700 hover:text-white px-3"
+                >
+                <div className="flex flex-row align-middle">
+                  <span className="mr-2">Next</span>
+                  <svg className="w-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                  </svg>
+                </div>
+              </button>             
+            </div>
           </div>
 
           {showAddUserModal && (
@@ -264,13 +296,13 @@ const Dashboard = () => {
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
                   />
                   
-                  <button type="button" onClick={handleCreateSubmit} className="mt-3 ml-10 w-40 inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                  <button type="button" onClick={handleCreateSubmit} className="mt-3 ml-10 w-40 inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
                     Add User
                   </button>
                   <button
                     onClick={handleAddUserModalClose}
                     type="button"
-                    className="mt-3 ml-10 w-40 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-3 ml-10 w-40 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-500 hover:bg-red-900 text-white text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
                   >
                     Cancel
                   </button>
