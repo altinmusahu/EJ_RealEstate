@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 const Footer = () => {
     return(
 
-        <div className="w-full h-36 bg-blue-900 mt-10 ">
+        <div className="w-full h-36 bg-blue-900">
             <div className="flex justify-center items-center">
                 <div className="flex items-center justify-center ">
                     <div className="flex items-center justify-center mt-8">
