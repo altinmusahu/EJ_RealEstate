@@ -18,6 +18,9 @@ app.use(cors(corsOptions));
 // app.use(cors());
 app.use(bodyParser.json());
 dotenv.config({ path: './config.env' });
+const express = require("express");
+const path = require("path");
+const multer=require("multer");
 
 const config = {
   host: process.env.DB_HOST,
@@ -25,6 +28,9 @@ const config = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 };
+
+app.use(express.static(path.join(__dirname, "utils")));
+
 
 
 //All the Edit function code:

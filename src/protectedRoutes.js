@@ -6,11 +6,12 @@ const ProtectedRoute = ({ allowedRole }) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
   const [countdown, setCountdown] = useState(3);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
   useEffect(() => {
     let timer;
 
-    if (!token || (token && token.role !== allowedRole && countdown > 0)) {
+    if (!token || (token && token.Role !== allowedRole && countdown > 0)) {
       timer = setInterval(() => {
         setCountdown((prevCount) => prevCount - 1);
       }, 1000);
@@ -32,12 +33,19 @@ const ProtectedRoute = ({ allowedRole }) => {
 
   const hasAccess = token && token.Role && allowedRole.includes(token.Role);
 
+  useEffect(() => {
+    // Additional useEffect to check if user data has been loaded
+    if (userDataLoaded && countdown === 0 && !hasAccess) {
+      navigate("/signin");
+      console.log("Admin not access");
+    }
+  }, [userDataLoaded, countdown, hasAccess, navigate]);
+
   return hasAccess ? (
     <Outlet />
   ) : (
     <h1 className="text-xl p-8 text-blue-900 text-center bg-blue-200">
-      You do not have access to this page. Redirecting to login in {countdown}{" "}
-      seconds...
+      You do not have access to this page. Redirecting to login in {countdown} seconds...
     </h1>
   );
 };

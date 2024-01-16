@@ -5,11 +5,36 @@ import pic1 from '../../utils/pic1.png';
 import { CiSearch } from "react-icons/ci";
 import About from "./about";
 import Offers from "./offers";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProperties, fetchPropertiesByID } from "../../store/properties-slice"; // Adjust the path
+import SearchInOffers from "../header/searchInOffers"; // Adjust the path
+import { Link } from 'react-router-dom';
+import { FaLocationDot } from "react-icons/fa6";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
   const searchRef = useRef();
+  const [selectedPropertyType, setSelectedPropertyType] = useState(null);
+
+
+  const dispatch = useDispatch();
+
+  const handlePropertyTypeChange = (PropertyTypeId) => {
+    setIsOpen(false); // Close the dropdown when a property type is selected
+    setSelectedPropertyType(PropertyTypeId);
+
+    dispatch(fetchPropertiesByID(PropertyTypeId));
+  };
+
+  const properties = useSelector((state) => state.properties.properties);
+  const propertiesByID = useSelector((state) => state.properties.propertiesByID);
+
+  useEffect(() => {
+    dispatch(fetchProperties());
+    dispatch(fetchPropertiesByID());
+  }, [dispatch]);
+
 
 
   const searchHandler = (e) => {
@@ -53,21 +78,27 @@ const Home = () => {
                     {/* Dropdown items */}
                     <a
                       href="#"
+                      onClick={() => handlePropertyTypeChange(1)} // Change the argument based on property type ID
+
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Account settings
+                      Apartaments
                     </a>
                     <a
                       href="#"
+                      onClick={() => handlePropertyTypeChange(2)} // Change the argument based on property type ID
+
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Support
+                      Duplex
                     </a>
                     <a
                       href="#"
+                      onClick={() => handlePropertyTypeChange(3)} // Change the argument based on property type ID
+
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      License
+                      Double Rooms
                     </a>
                   </div>
                 </div>
@@ -88,6 +119,7 @@ const Home = () => {
           </div>
           </div>
       </div>
+
       <div className="lg:flex flex-row-reverse mt-12 hidden sm:hidden md:hidden">
         <div className="w-56 h-full relative">
           <div className="w-2 h-2 left-0 top-0 absolute bg-slate-100 rounded-full" />
@@ -98,7 +130,7 @@ const Home = () => {
           <div className="w-2 h-2 left-0 top-[80px] absolute bg-slate-100 rounded-full" />
           <div className="w-2 h-2 left-0 top-[96px] absolute bg-slate-100 rounded-full" />
           <div className="w-2 h-2 left-0 top-[112px] absolute bg-slate-100 rounded-full" />
-          <div className="w-2 h-2 left-0 top-[128px] absolute bg-slate-100 rounded-full" />
+          <div className="w-2 h-2 left-0 top-[128px] ab solute bg-slate-100 rounded-full" />
           <div className="w-2 h-2 left-0 top-[144px] absolute bg-slate-100 rounded-full" />
           <div className="w-2 h-2 left-[97px] top-0 absolute bg-slate-100 rounded-full" />
           <div className="w-2 h-2 left-[97px] top-[16px] absolute bg-slate-100 rounded-full" />
@@ -815,9 +847,46 @@ const Home = () => {
         <img className="w-3/3 h-full object-cover" src={pic1} alt="Your Image" />
       </div>
 
+      
 
 
-    </div><Offers /><About /></>
+
+    </div>
+    <div className="flex justify-center gap-8">
+          {selectedPropertyType !== null ? (
+            propertiesByID && propertiesByID.length > 0 ? (
+              propertiesByID.map((property) => (
+                <div key={property.PropertyID}>
+                  <Link to={`/details/${property.PropertyID}`}>
+                    <div className="lg:w-80 lg:h-auto w-64 h-80 md:h-96 bg-white rounded border border-slate-100">
+                      <img
+                        // src={`data:Image/jpeg;base64,${convertBufferToBase64(property.Image.data)}`}
+                        className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105"
+                        alt="Offer"
+                      />
+                      <div className="flex flex-col justify-between p-2 md:p-4">
+                        <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
+                          {property.PropertyName}
+                        </div>
+                        <div className="text-blue-900 text-base font-bold font-[Open-Sans]">
+                          {property.Price}
+                        </div>
+                        <div className="text-slate-900 text-base font-normal font-[open-sans] flex">
+                          <FaLocationDot className="flex justify-center items-center mt-1 mr-2" />
+                          {property.City}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p>No properties available for the selected type.</p>
+            )
+          ) : (
+            <p className="hidden">Loading...</p>
+          )}
+        </div><Offers /><About /></>
     );
 };
 
