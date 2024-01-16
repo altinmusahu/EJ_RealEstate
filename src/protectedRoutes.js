@@ -22,13 +22,14 @@ const ProtectedRoute = ({ allowedRole }) => {
     };
   }, [token, allowedRole, countdown]);
 
-  useEffect(() => {
-    // Check if token exists and has a role property
-    if (countdown === 0 && (!token || !token.Role || !allowedRole.includes(token.Role))) {
-      navigate("/signin");
-      console.log("Admin not access");
-    }
-  }, [countdown, navigate, allowedRole, token]);
+  // useEffect(() => {
+  //   // Check if token exists and has a role property
+  //   if (countdown === 0 && (!token || !token.role || !allowedRole.includes(token.Role))) {
+  //     navigate("/signin");
+  //     console.log("Admin not access")
+  //   }
+
+  // }, [countdown, navigate, allowedRole, token]);
 
   const hasAccess = token && token.Role && allowedRole.includes(token.Role);
 

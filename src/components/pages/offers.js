@@ -26,7 +26,7 @@ const Offers = () => {
       <div className=" lg:block custom-w h-0.5 bg-blue-900 lg:ml-40 hidden mt-2"></div>
       <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12">
         {/* Box 1 */}
-        <Link to="/details"> 
+        <Link to="/details1"> 
         <div className="lg:w-80 lg:h-auto w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
           <img className="w-80 h-48 md:h-64 object-contain  overflow-hidden transition duration-300 transform hover:scale-105" src={pic1} alt="Offer" />
           <div className="flex flex-col justify-between p-2 md:p-4">
