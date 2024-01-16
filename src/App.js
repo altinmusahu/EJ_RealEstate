@@ -15,6 +15,7 @@ import ProtectedRoute from "./protectedRoutes"; // Import the ProtectedRoute com
 import Details1 from "./components/pages/details1"
 import Details2 from "./components/pages/details2"
 import Details3 from "./components/pages/details3"
+import Property from "./components/header/property";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/details3" element={<Details3 />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
+                    <Route path="/details/:propertyID" element={<Property />} />
                     <Route element={<ProtectedRoute allowedRole="admin" />}>
                       <Route path="/dashboard" element={<Dashboard />} />
                     </Route>

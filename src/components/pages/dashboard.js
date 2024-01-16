@@ -26,6 +26,8 @@ const Dashboard = () => {
         const response = await fetch("http://localhost:4000/api/getusers");
         const data = await response.json();
         setUsers(data.users);
+        setUsersLoaded(true); // Set usersLoaded to true after successful data fetch
+
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

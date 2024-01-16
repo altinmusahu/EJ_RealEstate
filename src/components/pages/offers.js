@@ -1,8 +1,8 @@
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 import pic1 from '../../utils/pic1.png'; // Placeholder image
-import pic2 from '../../utils/pic2.jpg';
-import pic3 from '../../utils/pic3.avif';
+import pic2 from '../../utils/pic2.png';
+import pic6 from '../../utils/pic6.webp';
 import { FaLocationDot } from "react-icons/fa6";
 import { Link, NavLink } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ const Offers = () => {
         {/* Box 3 */}
         <Link to="/details3"> 
         <div className="lg:w-80 lg:h-[100%] w-64 h-80 md:h-96 bg-white rounded border border-slate-100 ">
-          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic3} alt="Offer" />
+          <img className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105" src={pic6} alt="Offer" />
           <div className="flex flex-col justify-between p-2 md:p-4">
             <div className="text-slate-900 text-lg md:text-xl font-bold font-[merriweather] leading-6 mb-4">
             Two-story residence featuring modern amenities.

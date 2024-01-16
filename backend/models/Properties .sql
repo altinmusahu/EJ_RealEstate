@@ -11,5 +11,6 @@ CREATE TABLE Properties (
     SquareFeet DECIMAL(18, 2),
     IsAvailable BIT DEFAULT 1,
     CreatedAt DATETIME DEFAULT GETDATE(),
+    Image NVARCHAR(255),
     FOREIGN KEY (PropertyTypeID) REFERENCES PropertyTypes(PropertyTypeID)
 );
