@@ -1,10 +1,10 @@
 const config = {
-  server: "LEART",
+  server: "ALTIN",
   authentication: {
     type: "default",
     options: {
-      userName: "leart1",
-      password: "leart",
+      userName: "altinDB",
+      password: "altin",
       trustedConnection: true,
     },
   },

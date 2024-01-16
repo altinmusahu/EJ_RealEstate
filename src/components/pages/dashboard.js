@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
+  const [usersLoaded, setUsersLoaded] = useState(false);
 
   useEffect(() => {
     // Fetch user data when the component mounts
@@ -15,6 +16,8 @@ const Dashboard = () => {
         console.log("User structure:", data.users.length > 0 ? data.users[0] : null);
   
         setUsers(data.users);
+        setUsersLoaded(true); // Set usersLoaded to true after successful data fetch
+
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

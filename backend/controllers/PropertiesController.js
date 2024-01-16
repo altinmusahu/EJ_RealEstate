@@ -44,14 +44,34 @@ exports.insertProperties = async (req, res) => {
     request.input('Bathrooms', sql.Int, Bathrooms);
     request.input('SquareFeet', sql.Decimal(18, 2), SquareFeet);
     request.input('IsAvailable', sql.Bit, IsAvailable);
-    request.input('Image', sql.VarBinary(sql.MAX), Image); // Assuming the image data is sent in the request body
+    request.input('Image', sql.NVarChar(255), Image); // Change to NVARCHAR for storing base64-encoded string
     
     const result = await request.query(query);
 
     res.status(200).json({ message: 'Property inserted successfully', result });
   } catch (error) {
     console.error('Error inserting Property:', error.message);
+    console.error('Stack trace:', error.stack); // Add this line
     res.status(500).json({ error: 'Failed to insert Property' });
+  }
+};
+
+exports.getAllProperties = async (req, res) => {
+  try {
+    await poolConnect;
+
+    const request = pool.request();
+
+    const query = 'SELECT * FROM Properties';
+
+    const result = await request.query(query);
+
+    const properties = result.recordset;
+
+    res.status(200).json({ properties });
+  } catch (error) {
+    console.error('Error fetching properties:', error.message);
+    res.status(500).json({ error: 'Failed to fetch properties' });
   }
 };
 

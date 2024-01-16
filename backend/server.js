@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 app.use(cors());
 dotenv.config({ path: './config.env' });
+const express = require("express");
+const path = require("path");
+const multer=require("multer");
 
 
 
@@ -13,6 +16,10 @@ const config = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 };
+
+app.use(express.static(path.join(__dirname, "utils")));
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

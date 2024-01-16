@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
-
+const path = require("path");
 const app = express();
 
 // Middleware setup
@@ -53,6 +53,9 @@ app.use(function (request, response, next) {
 });
 
 app.use(express.json()); // Add this line to parse JSON requests
+
+
+
 
 
 // User Routes
