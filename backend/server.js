@@ -4,13 +4,13 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  // optionsSuccessStatus: 204,
-  optionsSuccessStatus: 200,
-};
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    // optionsSuccessStatus: 204,
+    optionsSuccessStatus: 200,
+  };
 
 app.use(cors(corsOptions));
 

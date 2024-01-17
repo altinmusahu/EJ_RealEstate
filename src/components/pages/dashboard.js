@@ -144,7 +144,7 @@ const Dashboard = () => {
     <div className="lg:flex min-h-screen justify-center h-full">
       {/* Sidebar */}
       <div className="lg:w-1/4 bg-gray-800 text-white p-4">
-        <div className="text-2xl font-bold mb-4 tracking-widest">Dashboard</div>
+        <div className="text-2xl font-bold mb-4 tracking-widest">Dashboard</div> 
         <ul className="mt-14">
           <li>
             <button className="hover:text-gray-300 flex flex-row" onClick={() => window.location.href = '/'}>
