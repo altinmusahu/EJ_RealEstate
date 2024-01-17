@@ -63,3 +63,22 @@ exports.insertPropertyTypes = async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch properties by type' });
     }
   };
+
+  exports.getAllPropertiesType = async (req, res) => {
+    try {
+      await poolConnect;
+  
+      const request = pool.request();
+  
+      const query = 'SELECT * FROM PropertyTypes';
+  
+      const result = await request.query(query);
+  
+      const propertiesType = result.recordset;
+  
+      res.status(200).json({ propertiesType });
+    } catch (error) {
+      console.error('Error fetching propertiesType:', error.message);
+      res.status(500).json({ error: 'Failed to fetch propertiesType' });
+    }
+  };

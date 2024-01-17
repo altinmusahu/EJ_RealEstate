@@ -31,6 +31,18 @@ const config = {
 
 app.use(express.static(path.join(__dirname, "utils")));
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // The folder where uploaded files will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Rename the file with a timestamp to avoid overwriting
+  },
+});
+
+const upload = multer({ storage: storage });
+
+
 
 
 //All the Edit function code:
@@ -57,28 +69,48 @@ app.get("/api/getusers", async (req, res) => {
 });
 
 //Create users function
-app.post("/api/adduser", async (req, res) => {
-  const newUser = req.body;
+app.post("/api/addproperty", upload.single("Image"), async (req, res) => {
+  const newProperty = req.body;
+  newProperty.Image = req.file.filename; // Set the filename in the 'Image' property
+
 
   try {
     const pool = await sql.connect(config);
     const result = await pool
       .request()
-      .input('Username', sql.NVarChar(255), newUser.Username)
-      .input('Email', sql.NVarChar(255), newUser.Email)
-      .input('Password', sql.NVarChar(255), newUser.Password)
-      .input('Role', sql.NVarChar(50), newUser.Role)
-      .query('INSERT INTO Users (Username, Email, Password, Role) VALUES (@Username, @Email, @Password, @Role); SELECT SCOPE_IDENTITY() AS UserID');
+      .input('PropertyName', sql.NVarChar(100), newProperty.PropertyName)
+      .input('PropertyTypeID', sql.Int, newProperty.PropertyTypeID)
+      .input('Price', sql.Decimal(18, 2), newProperty.Price)
+      .input('Description', sql.NVarChar(sql.MAX), newProperty.Description)
+      .input('Address', sql.NVarChar(255), newProperty.Address)
+      .input('City', sql.NVarChar(100), newProperty.City)
+      .input('Bedrooms', sql.Int, newProperty.Bedrooms)
+      .input('Bathrooms', sql.Int, newProperty.Bathrooms)
+      .input('SquareFeet', sql.Decimal(18, 2), newProperty.SquareFeet)
+      .input('IsAvailable', sql.Bit, newProperty.IsAvailable || 1)
+      .input('Image', sql.NVarChar(255), newProperty.Image)
+      .query(`
+        INSERT INTO Properties (
+          PropertyName, PropertyTypeID, Price, Description, Address, City,
+          Bedrooms, Bathrooms, SquareFeet, IsAvailable, CreatedAt, Image
+        ) 
+        VALUES (
+          @PropertyName, @PropertyTypeID, @Price, @Description, @Address, @City,
+          @Bedrooms, @Bathrooms, @SquareFeet, @IsAvailable, CURRENT_TIMESTAMP, @Image
+        );
+        SELECT SCOPE_IDENTITY() AS PropertyID
+      `);
 
-    const userId = result.recordset[0].UserID;
-    const createdUser = { UserID: userId, ...newUser };
+    const propertyId = result.recordset[0].PropertyID;
+    const createdProperty = { PropertyID: propertyId, ...newProperty };
 
-    res.json({ success: true, user: createdUser });
+    res.json({ success: true, property: createdProperty });
   } catch (error) {
-    console.error('Error adding user:', error);
+    console.error('Error adding property:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
 
 
 // Edit users
@@ -106,27 +138,6 @@ app.put("/api/edituser", async (req, res) => {
   }
 });
 
-//Delete function code
-app.delete("/api/deleteuser/:id", async (req, res) => {
-  const userId = req.params.id;
-  console.log('Received delete request for user ID:', userId);
-  try {
-    const pool = await sql.connect(config);
-    const result = await pool
-      .request()
-      .input('UserID', sql.Int, userId)
-      .query('DELETE FROM Users WHERE UserID = @UserID');
-
-    if (result.rowsAffected[0] > 0) {
-      res.json({ success: true, message: 'User deleted successfully' });
-    } else {
-      res.status(404).json({ success: false, message: 'User not found' });
-    }
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-});
 
 
 const port = process.env.PORT || 3000;

@@ -6,141 +6,138 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
 import { deleteUsers } from "../../store/admin-slice";
+import { fetchPropertiesType } from "../../store/properties-slice"; // Import your action
 
-const Dashboard = () => {
+const PTypesDashboard = () => {
 
   const dispatch = useDispatch();
+  const propertiesType = useSelector((state) => state.properties.propertiesType);
+  console.log(propertiesType);
+  useEffect(() => {
+    dispatch(fetchPropertiesType());
+  }, [dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());
-    // navigate("/");
   };
 
 
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [propType, setPropertiesType] = useState([]);
+  const [selectedPropType, setSelectedPropType] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editedUser, setEditedUser] = useState({});
+  const [editedPropType, setEditedPropType] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showAddPropTypeModal, setShowAddPropTypeModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(4);
+  const [propTypeperPage] = useState(4);
 
-  const [newUser, setNewUser] = useState({
-    Username: "",
-    Email: "",
-    Password: "",
-    Role: "",
+
+  const [newPropType, setNewPropType] = useState({
+    PropertyTypeName: "",
   });
  ;
 
  
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/api/getusers");
-        const data = await response.json();
-        setUsers(data.users);
-        // setUsersLoaded(true); 
-
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-      
-    };
-    fetchUsers();
-  }, [showDeleteModal]);
-
-  const handleEditClick = (user) => {
-    setSelectedUser(user);
+  const handleEditClick = (propType) => {
+    setSelectedPropType(propType);
     setShowEditModal(true);
+    setEditedPropType({ ...propType });
+
   };
 
   const handleEditModalClose = () => {
-    setSelectedUser(null);
+    setSelectedPropType(null);
     setShowEditModal(false);
+    setEditedPropType({});
+
   };
 
-  const handleEditSubmit = async (editedUser) => {
+  const handleEditSubmit = async (editedProp) => {
     try {
-      await fetch("http://localhost:4000/api/edituser", {
+      await fetch("http://localhost:4000/api/editproperty", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          UserID: selectedUser.UserID,
-          Username: editedUser.Username,
-          Email: editedUser.Email,
-          Role: editedUser.Role,
+            // PropertyID: selectedProp.PropertyID,
+            // PropertyName: editedProp.PropertyName,
+            // PropertyTypeID: editedProp.PropertyTypeID,
+            // Price: editedProp.Price,
+            // Description: editedProp.Description,
+            // Address: editedProp.Address,
+            // City: editedProp.City,
+            // Bedrooms: editedProp.Bedrooms,
+            // Bathrooms: editedProp.Bathrooms,
+            // SquareFeet: editedProp.SquareFeet,
+            // isAvailable: editedProp.isAvailable,
+            // Image: editedProp.Image,
         }),
       });
-
-      // Updates the users state with the edited data
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.UserID === editedUser.UserID ? { ...user, ...editedUser } : user
+  
+      // Updates the properties state with the edited data
+      setPropertiesType((prevProperties) =>
+        prevProperties.map((property) =>
+          property.PropertyID === editedProp.PropertyID
+            ? { ...property, ...editedProp }
+            : property
         )
       );
-
+  
       handleEditModalClose();
     } catch (error) {
-      console.error("Error editing user:", error);
+      console.error("Error editing property:", error);
     }
   };
+  
 
   const handleInputChange = (e) => {
-    setEditedUser({
-      ...editedUser,
+    setEditedPropType({
+      ...editedPropType,
       [e.target.name]: e.target.value,
     });
 
-    setNewUser({
-      ...newUser,
+    setNewPropType({
+      ...newPropType,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleCreateSubmit = async () => {
-    console.log(JSON.stringify(newUser));
     try {
-      const response = await fetch("http://localhost:4000/api/adduser", {
+      const response = await fetch("http://localhost:4000/api/addproperty", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(editedPropType),
       });
+  
+      // Update the UI with the edited property
+      setPropertiesType((prevProperties) =>
+        prevProperties.map((property) =>
+          property.PropertyID === editedPropType.PropertyID
+            ? { ...property, ...editedPropType }
+            : property
+        )
+      );
 
-      const data = await response.json();
-
-      if (data.success) {
-        // Optionally, update the UI to reflect the new user
-        setUsers((prevUsers) => [...prevUsers, data.user]);
-        setNewUser({
-          Username: "",
-          Email: "",
-          Password: "",
-          Role: "",
-        });
-        alert("User added successfully!");
-      } else {
-        alert("Error adding user: " + data.message);
-      }
+      handleEditModalClose();
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error("Error editing property:", error);
     }
   };
+  
 
   
 
   const handleAddUserModalOpen = () => {
-    setShowAddUserModal(true);
+    setShowAddPropTypeModal(true);
   };
 
   const handleAddUserModalClose = () => {
-    setShowAddUserModal(false);
+    setShowAddPropTypeModal(false);
   };
 
   return (
@@ -149,7 +146,7 @@ const Dashboard = () => {
       <div className="lg:w-1/4 bg-gray-800 text-white p-4">
         <div className="text-2xl font-bold mb-4 tracking-widest">Dashboard</div>
         <ul className="mt-14">
-          <NavLink to="/dashboard">
+          <NavLink to='/dashboard'>
             <li className="p-4">
               <button className="hover:text-gray-300 flex flex-row">
               <FaUsers size={25} className="mr-2"/>
@@ -158,7 +155,7 @@ const Dashboard = () => {
               <div className="border-b border-gray-600"></div>
             </li>
           </NavLink>
-          <NavLink to="/properties">
+          <NavLink to='/properties'>
             <li className="p-4">
               <button className="hover:text-gray-300 flex flex-row">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-6 pr-2">
@@ -169,17 +166,16 @@ const Dashboard = () => {
               <div className="border-b border-gray-600"></div>
             </li>
           </NavLink>
-          <NavLink to="/ptypesdashboard" >
-            <li className="p-4">
-              <button className="hover:text-gray-300 flex flex-row">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-6 pr-2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-              </svg>
-              Properties Type
-              </button>
-              <div className="border-b border-gray-600"></div>
-            </li>
-          </NavLink>
+
+          <li className="p-4">
+            <button className="hover:text-gray-300 flex flex-row">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-6 pr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            Properties Type
+            </button>
+            <div className="border-b border-gray-600"></div>
+          </li>
 
           <li className="p-4 mt-16 flex items-center">
           <MdLogout size={25}/>
@@ -194,54 +190,52 @@ const Dashboard = () => {
       </div>
 
       {/* Main content */}
-      <div className="lg:w-3/4 mt-20">
+      <div className="lg:w-3/4">
         <div className="w-full">
           <div className="justify-start items-start gap-8 inline-flex mt-6">
             <div className="justify-center items-center flex p-2">
               <div className="px-4 justify-center items-center flex">
                 <div className="px-2 justify-center items-center gap-2.5 flex">
                   <div className="text-black text-base font-bold font-['Open Sans'] leading-normal">
-                    All Users
+                    All Properties Types
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="w-[90%] h-96">
+          <div className="">
             <table className="w-[90%] bg-stone-50 rounded-lg mt-8 ml-10">
               <thead>
                 <tr>
                   <th className="text-left px-4 py-2">ID</th>
-                  <th className="text-left px-4 py-2">Username</th>
-                  <th className="text-left px-4 py-2">Email</th>
-                  <th className="text-left px-4 py-2">Role</th>
-                  <th className="text-left px-9 py-2">Actions</th>
+                  <th className="text-left px-4 py-2">Property Type Name</th>
+
                 </tr>
               </thead>
               <tbody>
-                {users
-                  .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage) //pagination
-                  .map((user, index) => (
-                    <tr key={user.UserID}>
-                      <td className="border-t px-4 py-2">{user.UserID}</td>
-                      <td className="border-t px-4 py-2">{user.Username}</td>
-                      <td className="border-t px-4 py-2">{user.Email}</td>
-                      <td className="border-t px-4 py-2">{user.Role}</td>
+                {propertiesType
+                  .slice((currentPage - 1) * propTypeperPage, currentPage * propTypeperPage) //pagination
+                  .map((propertiesType, index) => (
+                    <tr key={propertiesType.PropertyTypeID}>
+                      <td className="border-t px-4 py-2">{propertiesType.PropertyTypeID}</td>
+                      <td className="border-t px-4 py-2">{propertiesType.PropertyTypeName}</td>
+
+
                       <td className="border-t px-4 py-2">
                         <div className="flex m-2">
                           <button
-                            onClick={() => handleEditClick(user)}
+                            onClick={() => handleEditClick(propType)}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-7 mt-2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>                           
                           </button>
                           <svg
-                            onClick={() => {
-                              dispatch(deleteUsers(user.UserID));
-                              window.location.reload();
-                            }}
+                            // onClick={() => {
+                            //   dispatch(deleteUsers(user.UserID));
+                            //   window.location.reload();
+                            // }}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -288,7 +282,7 @@ const Dashboard = () => {
 
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === Math.ceil(users.length / usersPerPage)}
+                disabled={currentPage === Math.ceil(propType.length / propTypeperPage)}
                 className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-700 hover:text-white px-3"
               >
                 <div className="flex flex-row align-middle">
@@ -311,20 +305,9 @@ const Dashboard = () => {
           </div>
 
 
-          {showEditModal && (
-            <EditUserModal
-              editedUser={editedUser}
-              handleInputChange={handleInputChange}
-              handleEditSubmit={handleEditSubmit}
-              handleEditModalClose={handleEditModalClose}
-              user={selectedUser}
-              onClose={handleEditModalClose}
-              onSave={handleEditSubmit}
-            />
-          )}
 
 
-            {showAddUserModal && (
+            {showAddPropTypeModal && (
             <div className="w-full fixed inset-0 overflow-y-auto">
               {/* Modal content */}
               <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -342,18 +325,18 @@ const Dashboard = () => {
                     type="text"
                     id="newUsername"
                     name="Username"
-                    value={newUser.Username}
+                    value={newPropType.PropertyName}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
                   />
                   
-                  <label htmlFor="newEmail">Price:</label>
+                  <label htmlFor="newEmail">Email:</label>
                   <input
                     type="email"
                     id="newEmail"
                     name="Email"
-                    value={newUser.Email}
+                    value={newPropType.Email}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
@@ -364,7 +347,7 @@ const Dashboard = () => {
                     type="password"
                     id="newPassword"
                     name="Password"
-                    value={newUser.Password}
+                    value={newPropType.Password}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
@@ -375,7 +358,7 @@ const Dashboard = () => {
                     type="text"
                     id="newRole"
                     name="Role"
-                    value={newUser.Role}
+                    value={newPropType.Role}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
@@ -402,4 +385,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PTypesDashboard;
