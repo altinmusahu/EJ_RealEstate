@@ -12,8 +12,8 @@ const Offers = () => {
     <div className="w-full h-full bg-slate-100 pb-12 md:pb-24  ">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between justify">
         <div className="w-full">
-          <div className="text-slate-900 text-3xl md:text-5xl font-bold font-[Merriweather] leading-8 pl-8 md:pl-40 pt-8 md:pt-12">Top offers</div>
-          <div className="text-slate-900 text-base md:text-xl font-normal font-[Open-Sans] leading-6 pl-8 md:pl-40 pt-2 md:pt-7">
+          <div className="text-slate-900 text-3xl md:text-5xl font-bold font-[Merriweather] leading-8 pl-8 md:pl-40 pt-8 md:pt-12 ml-20">Top offers</div>
+          <div className="text-slate-900 text-base md:text-xl font-normal font-[Open-Sans] leading-6 pl-8 md:pl-40 pt-2 md:pt-7 ml-20">
             Fulfill your career dreams, enjoy all the achievements of the <br /> city center and luxury housing to the fullest.
           </div>
         </div>
@@ -23,7 +23,7 @@ const Offers = () => {
           </NavLink>
         </div>
       </div>
-      <div className=" lg:block custom-w h-0.5 bg-blue-900 lg:ml-40 hidden mt-2"></div>
+      <div className=" lg:block w-[67%] h-0.5 bg-blue-900 hidden mt-2 ml-60"></div>
       <div className="flex flex-col justify-center items-center md:flex-row gap-6 lg:mt-20 mt-12">
         {/* Box 1 */}
         <Link to="/details1"> 

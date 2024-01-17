@@ -57,12 +57,12 @@ const Home = () => {
           <div className=" text-slate-900 text-xl font-normal font-['Open Sans'] mt-5 leading-9">We provide a complete service for the sale, purchase or rental of real estate. We have been operating in Madrid and Barcelona more than 15 years.</div>
         </div>
         <div className="w-auto flex items-center justify-center">
-          <div className="w-screen sm:w-full h-24 bg-slate-100 rounded border-b-2 mt-12 relative flex flex-col sm:flex-row gap-4">
+          <div className="w-screen sm:w-full h-16 bg-slate-100 rounded border-b-2 mt-12 relative flex flex-col sm:flex-row gap-4">
             <Menu as="div" className="relative inline-block text-left sm:mt-0">
               <div className="p-2">
                 <Menu.Button
                   onClick={handleMenuToggle}
-                  className="inline-flex w-full justify-center sm:w-auto sm:ml-6 rounded-md bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-base font-normal font-['Open Sans'] leading-relaxed"
+                  className="inline-flex w-full justify-center sm:w-auto sm:ml-6 rounded-md bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 font-normal font-['Open Sans'] leading-relaxed"
                 >
                   Property type
                   <ChevronDownIcon
@@ -104,7 +104,7 @@ const Home = () => {
                 </div>
               )}
             </Menu>
-            <div className="bg-white rounded mt-3 sm:mt-0 w-full sm:w-48 flex items-center justify-start text-center font-['Open Sans']">
+            <div className="bg-white rounded mt-2 h-10 w-full sm:w-48 flex items-center justify-start text-center font-['Open Sans']">
               <CiSearch className="ml-2 cursor-pointer" />
               <input
                 type="text"
@@ -113,7 +113,7 @@ const Home = () => {
               />
             </div>
 
-            <button className="w-full sm:w-28 mt-3 sm:mt-0 bg-blue-900 h-10 rounded flex justify-center items-center text-center text-white text-base font-bold font-['Open Sans']">
+            <button className="w-full sm:w-28 mt-2 mr-4 -ml-4 bg-blue-900 h-10 rounded flex justify-center items-center text-center text-white text-base font-bold font-['Open Sans']">
               Search
             </button>
           </div>
