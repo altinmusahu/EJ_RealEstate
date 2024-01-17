@@ -5,7 +5,9 @@ const propertiesSlice = createSlice({
   name: "properties",
   initialState: {
     properties: [],
-    propertiesByID : null
+    propertiesType: [],
+    propertiesByID : null,
+    propertyByID : null
   },
   reducers: {
     setProperties: (state, action) => {
@@ -14,10 +16,16 @@ const propertiesSlice = createSlice({
     setPropertiesByID: (state, action) => {
       state.propertiesByID = action.payload; 
     },
+    setPropertyByID: (state, action) => {
+      state.propertyByID = action.payload; 
+    },
+    setPropertiesType: (state, action) => {
+      state.propertiesType = action.payload; 
+    },
   },
 });
 
-export const { setProperties,setPropertiesByID } = propertiesSlice.actions;
+export const { setProperties,setPropertiesByID, setPropertyByID, setPropertiesType } = propertiesSlice.actions;
 
 export const fetchProperties = () => async (dispatch) => {
   try {
@@ -31,6 +39,7 @@ export const fetchProperties = () => async (dispatch) => {
     console.error("Fetch properties error:", error);
   }
 };
+
 export const fetchPropertiesByID = (PropertyTypeId) => async (dispatch) => {
   try {
     const response = await axios.get(`http://localhost:4000/api/getpropertiesbytype/${PropertyTypeId}`);
@@ -49,8 +58,18 @@ export const fetchPropertiesByID = (PropertyTypeId) => async (dispatch) => {
   }
 };
 
-
-
+export const fetchPropertiesType = () => async (dispatch) => {
+  try {
+    const response = await fetch("http://localhost:4000/api/getpropertiestype");
+    if (!response.ok) {
+      throw new Error("Failed to fetch properties");
+    }
+    const data = await response.json();
+    dispatch(setPropertiesType(data.propertiesType)); 
+  } catch (error) {
+    console.error("Fetch properties error:", error);
+  }
+};
 
 
 export default propertiesSlice.reducer;

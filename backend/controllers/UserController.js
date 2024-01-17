@@ -56,7 +56,8 @@ exports.insertUser = async (req, res, next) => {
 
   exports.deleteUser = async (req, res) => {
     try {
-      const { UserID } = req.params; 
+      const { UserID } = req.params;
+      console.log('Received UserID:', UserID);
   
       await poolConnect;
   
@@ -68,15 +69,11 @@ exports.insertUser = async (req, res, next) => {
       `;
   
       request.input('UserID', sql.Int, UserID);
-  
-      // Execute the query
-      const result = await request.query(query);
+
+        const result = await request.query(query);
       if (result.rowsAffected[0] === 0) {
         return res.status(404).json({ error: 'User not found' });
       }
-  
-
-  
       res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
       console.error('Error deleting user:', error.message);

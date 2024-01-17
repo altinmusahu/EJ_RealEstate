@@ -9,7 +9,7 @@ const {
 
 router.post("/insertuser", insertUser);
 router.get('/getusers', getAllUsers);
-router.delete("/deleteuser/:userID", deleteUser);
+router.delete("/deleteuser/:UserID", deleteUser);
 router.put("/updateuser/:userID", updateUser);
 
 

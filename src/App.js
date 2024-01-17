@@ -16,6 +16,8 @@ import Details1 from "./components/pages/details1"
 import Details2 from "./components/pages/details2"
 import Details3 from "./components/pages/details3"
 import Property from "./components/header/property";
+import PropertiesDashboard from "./components/pages/propertiesDashboard";
+import PTypesDashboard from "./components/pages/pTypesDashboard";
 
 function App() {
   return (
@@ -27,6 +29,14 @@ function App() {
             path="/dashboard/*"
             element={<Dashboard />}
           />
+          <Route
+            path="/properties/*"
+            element={<PropertiesDashboard />}
+          />
+          <Route
+            path="/ptypesdashboard/*"
+            element={<PTypesDashboard />}
+            />
           {/* Other Routes with Header */}
           <Route
             path="/*"
@@ -45,9 +55,13 @@ function App() {
                     <Route path="/details3" element={<Details3 />} />
                     <Route path="/signin" element={<SignIn />} />
                     <Route path="/signup" element={<SignUp />} />
-                    <Route path="/details/:propertyID" element={<Property />} />
+                    <Route path="/details/:PropertyID" element={<Property />} />
+
                     <Route element={<ProtectedRoute allowedRole="admin" />}>
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/properties" element={<PropertiesDashboard />} />
+                      <Route path="/ptypesdashboard" element={<PTypesDashboard />} />
+
                     </Route>
                   </Routes>
                 </main>

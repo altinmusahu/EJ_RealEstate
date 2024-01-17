@@ -6,148 +6,169 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
 import { deleteUsers } from "../../store/admin-slice";
+import { fetchProperties } from "../../store/properties-slice"; // Import your action
 
-const Dashboard = () => {
+const PropertiesDashboard = () => {
 
   const dispatch = useDispatch();
+  const properties = useSelector((state) => state.properties.properties);
+  
+  useEffect(() => {
+    dispatch(fetchProperties());
+  }, [dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());
-    // navigate("/");
   };
 
 
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [prop, setProperties] = useState([]);
+  const [selectedProp, setSelectedProp] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editedUser, setEditedUser] = useState({});
+  const [editedProp, setEditedProp] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showAddPropModal, setShowAddPropModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(4);
+  const [propperPage] = useState(4);
 
-  const [newUser, setNewUser] = useState({
-    Username: "",
-    Email: "",
-    Password: "",
-    Role: "",
+
+  const [newProp, setNewProp] = useState({
+    PropertyName: "",
+    PropertyTypeID: "",
+    Price: "",
+    Description: "",
+    Address: "",
+    City: "",
+    Bedrooms: "",
+    Bathrooms: "",
+    SquareFeet: "",
+    isAvailable: "",
+    Image: "",
   });
  ;
 
  
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/api/getusers");
-        const data = await response.json();
-        setUsers(data.users);
-        // setUsersLoaded(true); 
-
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-      
-    };
-    fetchUsers();
-  }, [showDeleteModal]);
-
-  const handleEditClick = (user) => {
-    setSelectedUser(user);
+  const handleEditClick = (prop) => {
+    setSelectedProp(prop);
     setShowEditModal(true);
+    setEditedProp({ ...prop });
+
   };
 
   const handleEditModalClose = () => {
-    setSelectedUser(null);
+    setSelectedProp(null);
     setShowEditModal(false);
+    setEditedProp({});
+
   };
 
-  const handleEditSubmit = async (editedUser) => {
+  const handleEditSubmit = async (editedProp) => {
     try {
-      await fetch("http://localhost:4000/api/edituser", {
+      await fetch("http://localhost:4000/api/editproperty", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          UserID: selectedUser.UserID,
-          Username: editedUser.Username,
-          Email: editedUser.Email,
-          Role: editedUser.Role,
+            PropertyID: selectedProp.PropertyID,
+            PropertyName: editedProp.PropertyName,
+            PropertyTypeID: editedProp.PropertyTypeID,
+            Price: editedProp.Price,
+            Description: editedProp.Description,
+            Address: editedProp.Address,
+            City: editedProp.City,
+            Bedrooms: editedProp.Bedrooms,
+            Bathrooms: editedProp.Bathrooms,
+            SquareFeet: editedProp.SquareFeet,
+            isAvailable: editedProp.isAvailable,
+            Image: editedProp.Image,
         }),
       });
+  
+      // Updates the properties state with the edited data
+      setProperties((prevProperties) =>
+        prevProperties.map((property) =>
+          property.PropertyID === editedProp.PropertyID
+            ? { ...property, ...editedProp }
+            : property
+        )
+      );
+  
+      handleEditModalClose();
+    } catch (error) {
+      console.error("Error editing property:", error);
+    }
+  };
+  
 
-      // Updates the users state with the edited data
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user.UserID === editedUser.UserID ? { ...user, ...editedUser } : user
+  const handleInputChange = (e) => {
+    const { name, value, type, files } = e.target;
+  
+    // Check if the input is a numeric field
+    const isNumeric = ['Price', 'Bedrooms', 'Bathrooms', 'SquareFeet'].includes(name);
+  
+    setEditedProp((prevProp) => ({
+      ...prevProp,
+      [name]: isNumeric ? parseFloat(value) || 0 : value,
+    }));
+  
+    setNewProp((prevNewProp) => ({
+      ...prevNewProp,
+      [name]: isNumeric ? parseFloat(value) || 0 : type === 'file' ? files[0] : value,
+    }));
+  };
+  
+  
+
+  const handleCreateSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/addproperty", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editedProp),
+      });
+  
+      // Update the UI with the edited property
+      setProperties((prevProperties) =>
+        prevProperties.map((property) =>
+          property.PropertyID === editedProp.PropertyID
+            ? { ...property, ...editedProp }
+            : property
         )
       );
 
       handleEditModalClose();
     } catch (error) {
-      console.error("Error editing user:", error);
+      console.error("Error editing property:", error);
     }
   };
-
-  const handleInputChange = (e) => {
-    setEditedUser({
-      ...editedUser,
-      [e.target.name]: e.target.value,
-    });
-
-    setNewUser({
-      ...newUser,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleCreateSubmit = async () => {
-    console.log(JSON.stringify(newUser));
-    try {
-      const response = await fetch("http://localhost:4000/api/adduser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // Optionally, update the UI to reflect the new user
-        setUsers((prevUsers) => [...prevUsers, data.user]);
-        setNewUser({
-          Username: "",
-          Email: "",
-          Password: "",
-          Role: "",
-        });
-        alert("User added successfully!");
-      } else {
-        alert("Error adding user: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
-  };
+  
 
   
 
   const handleAddUserModalOpen = () => {
-    setShowAddUserModal(true);
+    setShowAddPropModal(true);
   };
 
   const handleAddUserModalClose = () => {
-    setShowAddUserModal(false);
+    setShowAddPropModal(false);
+  };
+
+  const handleImageChange = (e) => {
+    setNewProp({
+      ...newProp,
+      Image: e.target.files[0], // Use e.target.files to get the selected file
+    });
   };
 
   return (
     <div className="lg:flex min-h-screen justify-center h-full">
       {/* Sidebar */}
       <div className="lg:w-1/4 bg-gray-800 text-white p-4">
-        <div className="text-2xl font-bold mb-4 tracking-widest">Dashboard</div> 
+        <div className="text-2xl font-bold mb-4 tracking-widest">Dashboard</div>
         <ul className="mt-14">
           <NavLink to="/dashboard">
             <li className="p-4">
@@ -180,7 +201,15 @@ const Dashboard = () => {
               <div className="border-b border-gray-600"></div>
             </li>
           </NavLink>
-
+          <li className="p-4">
+            <button className="hover:text-gray-300 flex flex-row mt-2" onClick={handleAddUserModalOpen}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-6 pr-2 ">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+              Add a New Property
+            </button>
+            <div className="border-b border-gray-600"></div>
+          </li>
           <li className="p-4 mt-16 flex items-center">
           <MdLogout size={25}/>
           <NavLink to='/home'>
@@ -194,54 +223,58 @@ const Dashboard = () => {
       </div>
 
       {/* Main content */}
-      <div className="lg:w-3/4 mt-20">
+      <div className="lg:w-3/4">
         <div className="w-full">
           <div className="justify-start items-start gap-8 inline-flex mt-6">
             <div className="justify-center items-center flex p-2">
               <div className="px-4 justify-center items-center flex">
                 <div className="px-2 justify-center items-center gap-2.5 flex">
                   <div className="text-black text-base font-bold font-['Open Sans'] leading-normal">
-                    All Users
+                    All Properties
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="w-[90%] h-96">
+          <div className="">
             <table className="w-[90%] bg-stone-50 rounded-lg mt-8 ml-10">
               <thead>
                 <tr>
                   <th className="text-left px-4 py-2">ID</th>
-                  <th className="text-left px-4 py-2">Username</th>
-                  <th className="text-left px-4 py-2">Email</th>
-                  <th className="text-left px-4 py-2">Role</th>
-                  <th className="text-left px-9 py-2">Actions</th>
+                  <th className="text-left px-4 py-2">Property Name</th>
+                  <th className="text-left px-4 py-2">Price</th>
+                  <th className="text-left px-9 py-2">Description</th>
+                  <th className="text-left px-4 py-2">City</th>
+                  <th className="text-left px-9 py-2">SquareFeet</th>
                 </tr>
               </thead>
               <tbody>
-                {users
-                  .slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage) //pagination
-                  .map((user, index) => (
-                    <tr key={user.UserID}>
-                      <td className="border-t px-4 py-2">{user.UserID}</td>
-                      <td className="border-t px-4 py-2">{user.Username}</td>
-                      <td className="border-t px-4 py-2">{user.Email}</td>
-                      <td className="border-t px-4 py-2">{user.Role}</td>
+                {properties
+                  .slice((currentPage - 1) * propperPage, currentPage * propperPage) //pagination
+                  .map((properties, index) => (
+                    <tr key={properties.PropertyID}>
+                      <td className="border-t px-4 py-2">{properties.PropertyID}</td>
+                      <td className="border-t px-4 py-2">{properties.PropertyName}</td>
+                      <td className="border-t px-4 py-2">{properties.Price}</td>
+                      <td className="border-t px-4 py-2">{properties.Description}</td>
+                      <td className="border-t px-4 py-2">{properties.City}</td>
+                      <td className="border-t px-4 py-2">{properties.SquareFeet}</td>
+
                       <td className="border-t px-4 py-2">
                         <div className="flex m-2">
                           <button
-                            onClick={() => handleEditClick(user)}
+                            onClick={() => handleEditClick(prop)}
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-7 mt-2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>                           
                           </button>
                           <svg
-                            onClick={() => {
-                              dispatch(deleteUsers(user.UserID));
-                              window.location.reload();
-                            }}
+                            // onClick={() => {
+                            //   dispatch(deleteUsers(user.UserID));
+                            //   window.location.reload();
+                            // }}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -288,7 +321,7 @@ const Dashboard = () => {
 
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === Math.ceil(users.length / usersPerPage)}
+                disabled={currentPage === Math.ceil(prop.length / propperPage)}
                 className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-gray-700 hover:text-white px-3"
               >
                 <div className="flex flex-row align-middle">
@@ -313,18 +346,18 @@ const Dashboard = () => {
 
           {showEditModal && (
             <EditUserModal
-              editedUser={editedUser}
+              editedProp={editedProp}
               handleInputChange={handleInputChange}
               handleEditSubmit={handleEditSubmit}
               handleEditModalClose={handleEditModalClose}
-              user={selectedUser}
+              prop={selectedProp}
               onClose={handleEditModalClose}
               onSave={handleEditSubmit}
             />
           )}
 
 
-            {showAddUserModal && (
+            {showAddPropModal && (
             <div className="w-full fixed inset-0 overflow-y-auto">
               {/* Modal content */}
               <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -336,53 +369,128 @@ const Dashboard = () => {
                 </span>
                 <div className="inline-grid  bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all align-middle">
                   
-                  <h2 className="text-xl font-bold mb-2">Add New User</h2>
-                  <label htmlFor="newUsername">Property Name:</label>
+                  <h2 className="text-xl font-bold mb-2">Add New Property</h2>
+                  <label htmlFor="newProperty">Property Name:</label>
                   <input
                     type="text"
-                    id="newUsername"
-                    name="Username"
-                    value={newUser.Username}
+                    id="newProperty"
+                    name="PropertyName"
+                    value={newProp.PropertyName}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
                   />
                   
-                  <label htmlFor="newEmail">Price:</label>
-                  <input
-                    type="email"
-                    id="newEmail"
-                    name="Email"
-                    value={newUser.Email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
-                  />
-
-                  <label htmlFor="newPassword">Password:</label>
-                  <input
-                    type="password"
-                    id="newPassword"
-                    name="Password"
-                    value={newUser.Password}
-                    onChange={handleInputChange}
-                    required
-                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
-                  />
-
-                  <label htmlFor="newRole">Role:</label>
+                  <label htmlFor="newPropertyTypeID">PropertyTypeID:</label>
                   <input
                     type="text"
-                    id="newRole"
-                    name="Role"
-                    value={newUser.Role}
+                    id="newPropertyTypeID"
+                    name="PropertyTypeID"
+                    value={newProp.PropertyTypeID}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newPrice">Price:</label>
+                  <input
+                    type="text"
+                    id="newPrice"
+                    name="Price"
+                    value={newProp.Price}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newDescription">Description:</label>
+                  <input
+                    type="text"
+                    id="newDescription"
+                    name="Description"
+                    value={newProp.Description}
                     onChange={handleInputChange}
                     required
                     className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
                   />
                   
+                  <label htmlFor="newAddress">Address:</label>
+                  <input
+                    type="text"
+                    id="newAddress"
+                    name="Address"
+                    value={newProp.Address}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newCity">City:</label>
+                  <input
+                    type="text"
+                    id="newCity"
+                    name="City"
+                    value={newProp.City}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newBedrooms">Bedrooms:</label>
+                  <input
+                    type="text"
+                    id="newBedrooms"
+                    name="Bedrooms"
+                    value={newProp.Bedrooms}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+                  <label htmlFor="newBathrooms">Bathrooms:</label>
+                  <input
+                    type="text"
+                    id="newBathrooms"
+                    name="Bathrooms"
+                    value={newProp.Bathrooms}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newSquareFeet">SquareFeet:</label>
+                  <input
+                    type="text"
+                    id="newSquareFeet"
+                    name="SquareFeet"
+                    value={newProp.SquareFeet}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newDescription">isAvailable:</label>
+                  <input
+                    type="text"
+                    id="newDescription"
+                    name="Description"
+                    value={1}
+                    onChange={handleInputChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
+                  <label htmlFor="newImage">Image:</label>
+                  <input
+                    type="file"
+                    id="newImage"
+                    name="Image"
+                    onChange={handleImageChange}
+                    required
+                    className="w-60 border border-gray-300 rounded-md px-3 py-2 mb-2"
+                  />
+
                   <button type="button" onClick={handleCreateSubmit} className="mt-3 ml-10 w-40 inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
-                    Add User
+                    Add Property
                   </button>
                   <button
                     onClick={handleAddUserModalClose}
@@ -402,4 +510,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PropertiesDashboard;
