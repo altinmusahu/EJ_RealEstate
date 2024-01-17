@@ -11,7 +11,10 @@ import SearchInOffers from "../header/searchInOffers"; // Adjust the path
 import { Link } from 'react-router-dom';
 import { FaLocationDot } from "react-icons/fa6";
 
+
+
 const Home = () => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
   const searchRef = useRef();
@@ -23,12 +26,13 @@ const Home = () => {
   const handlePropertyTypeChange = (PropertyTypeId) => {
     setIsOpen(false); // Close the dropdown when a property type is selected
     setSelectedPropertyType(PropertyTypeId);
-
     dispatch(fetchPropertiesByID(PropertyTypeId));
   };
 
   const properties = useSelector((state) => state.properties.properties);
   const propertiesByID = useSelector((state) => state.properties.propertiesByID);
+
+
 
   useEffect(() => {
     dispatch(fetchProperties());
@@ -48,6 +52,7 @@ const Home = () => {
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
   };
+
 
   return (
     <><div className="flex sm:flex-row items-center justify-center sm:justify-center sm:items-start mt-5">
@@ -78,7 +83,7 @@ const Home = () => {
                     {/* Dropdown items */}
                     <a
                       href="#"
-                      onClick={() => handlePropertyTypeChange(1)} // Change the argument based on property type ID
+                      onClick={() => handlePropertyTypeChange(4)} // Change the argument based on property type ID
 
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
@@ -86,7 +91,7 @@ const Home = () => {
                     </a>
                     <a
                       href="#"
-                      onClick={() => handlePropertyTypeChange(2)} // Change the argument based on property type ID
+                      onClick={() => handlePropertyTypeChange(5)} // Change the argument based on property type ID
 
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
@@ -94,7 +99,7 @@ const Home = () => {
                     </a>
                     <a
                       href="#"
-                      onClick={() => handlePropertyTypeChange(3)} // Change the argument based on property type ID
+                      onClick={() => handlePropertyTypeChange(6)} // Change the argument based on property type ID
 
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
@@ -121,6 +126,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+
 
       <div className="lg:flex flex-row-reverse mt-12 hidden sm:hidden md:hidden">
         <div className="w-56 h-full relative">
@@ -854,7 +860,7 @@ const Home = () => {
 
 
     </div>
-    <div className="flex justify-center gap-8">
+    <div className="flex flex-wrap justify-center items-center md:flex-row gap-6 mb-4">
           {selectedPropertyType !== null ? (
             propertiesByID && propertiesByID.length > 0 ? (
               propertiesByID.map((property) => (
@@ -862,7 +868,7 @@ const Home = () => {
                   <Link to={`/details/${property.PropertyID}`}>
                     <div className="lg:w-80 lg:h-auto w-64 h-80 md:h-96 bg-white rounded border border-slate-100">
                       <img
-                        // src={`data:Image/jpeg;base64,${convertBufferToBase64(property.Image.data)}`}
+                        src={`http://localhost:4000/${property.Image}`}
                         className="w-80 h-48 md:h-64 object-contain overflow-hidden transition duration-300 transform hover:scale-105"
                         alt="Offer"
                       />

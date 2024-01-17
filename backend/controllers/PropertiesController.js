@@ -75,4 +75,133 @@ exports.getAllProperties = async (req, res) => {
   }
 };
 
+exports.getPropertie = async (req, res) => {
+  try {
+    const PropertyID = req.params.PropertyID;
+
+    await poolConnect;
+
+    const request = pool.request();
+
+    const query = `
+      SELECT * FROM Properties WHERE PropertyID = @PropertyID
+    `;
+
+    request.input('PropertyID', sql.Int, PropertyID);
+
+    const result = await request.query(query);
+
+    res.status(200).json(result.recordset[0]);
+  } catch (error) {
+    console.error('Error fetching property:', error.message);
+    res.status(500).json({ error: 'Failed to fetch property' });
+  }
+};
   
+
+exports.updateProperty = async (req, res) => {
+  try {
+    const { PropertyID } = req.params; // Assuming propertyId is passed as a route parameter
+    const {
+      PropertyName,
+      PropertyTypeID,
+      Price,
+      Description,
+      Address,
+      City,
+      Bedrooms,
+      Bathrooms,
+      SquareFeet,
+      IsAvailable,
+      Image,
+    } = req.body;
+
+    if (
+      !PropertyName &&
+      !PropertyTypeID &&
+      !Price &&
+      !Description &&
+      !Address &&
+      !City &&
+      !Bedrooms &&
+      !Bathrooms &&
+      !SquareFeet &&
+      !IsAvailable &&
+      !Image
+    ) {
+      return res.status(400).json({
+        error:
+          'At least one field (PropertyName, PropertyTypeID, Price, Description, Address, City, Bedrooms, Bathrooms, SquareFeet, IsAvailable, Image) is required for update',
+      });
+    }
+
+    await poolConnect; // Wait for the connection to be established
+
+    const request = pool.request();
+
+    // SQL query to update a property by PropertyID
+    let query = 'UPDATE Properties SET ';
+
+    const queryParams = [];
+    if (PropertyName) {
+      query += 'PropertyName = @PropertyName, ';
+      request.input('PropertyName', sql.NVarChar(100), PropertyName);
+    }
+    if (PropertyTypeID) {
+      query += 'PropertyTypeID = @PropertyTypeID, ';
+      request.input('PropertyTypeID', sql.Int, PropertyTypeID);
+    }
+    if (Price) {
+      query += 'Price = @Price, ';
+      request.input('Price', sql.Decimal(18, 2), Price);
+    }
+    if (Description) {
+      query += 'Description = @Description, ';
+      request.input('Description', sql.NVarChar(sql.MAX), Description);
+    }
+    if (Address) {
+      query += 'Address = @Address, ';
+      request.input('Address', sql.NVarChar(255), Address);
+    }
+    if (City) {
+      query += 'City = @City, ';
+      request.input('City', sql.NVarChar(100), City);
+    }
+    if (Bedrooms) {
+      query += 'Bedrooms = @Bedrooms, ';
+      request.input('Bedrooms', sql.Int, Bedrooms);
+    }
+    if (Bathrooms) {
+      query += 'Bathrooms = @Bathrooms, ';
+      request.input('Bathrooms', sql.Int, Bathrooms);
+    }
+    if (SquareFeet) {
+      query += 'SquareFeet = @SquareFeet, ';
+      request.input('SquareFeet', sql.Decimal(18, 2), SquareFeet);
+    }
+    if (IsAvailable) {
+      query += 'IsAvailable = @IsAvailable, ';
+      request.input('IsAvailable', sql.Bit, IsAvailable);
+    }
+    if (Image) {
+      query += 'Image = @Image, ';
+      request.input('Image', sql.NVarChar(255), Image);
+    }
+
+    query = query.slice(0, -2); // Remove the trailing comma and space
+    query += ' WHERE PropertyID = @PropertyID';
+    request.input('PropertyID', sql.Int, PropertyID);
+
+    // Execute the query
+    const result = await request.query(query);
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ error: 'Property not found' });
+    }
+
+    res.status(200).json({ message: 'Property updated successfully' });
+  } catch (error) {
+    console.error('Error updating property:', error.message);
+    res.status(500).json({ error: 'Failed to update property' });
+  }
+};

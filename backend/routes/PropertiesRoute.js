@@ -5,11 +5,16 @@ const path = require("path");
 
 const {
   getAllProperties,
-  insertProperties, 
+  getPropertie,
+  updateProperty
 } = require("../controllers/PropertiesController");
 
 
 
 router.get("/getproperties", getAllProperties);
+router.get("/getPropertie/:PropertyID", getPropertie);
+router.put("/editproperty/:PropertyID", updateProperty);
+
+
 
 module.exports = router;
